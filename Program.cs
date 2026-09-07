@@ -57,7 +57,7 @@ internal static class Program
 
             // ---------- draw ----------
 
-
+            Raylib.DrawRectangle((int)(Settings.gameScreenWidth / 2f) - 32, (int)(Settings.gameScreenHeight / 2f) - 24, 64, 48, Settings.borderColor);
 
             // ---------- end draw ----------
 
@@ -65,7 +65,7 @@ internal static class Program
             Raylib.EndTextureMode();
 
             Raylib.BeginDrawing();
-            Raylib.ClearBackground(Settings.bgColor);
+            Raylib.ClearBackground(Color.Black);
 
             float scale = Settings.GetScale();
 
