@@ -6,25 +6,40 @@ namespace Snake_2;
 internal class Map
 {
     public Tile[,] tiles;
+    public Vector2 size;
 
-    public Map(Vector2 size, Vector2? _pos = null)
+    Vector2 tileSize;
+    Vector2 pos;
+
+    public Map()
     {
-        Vector2 pos = Vector2.Zero;
-        if (_pos != null) pos = (Vector2)_pos;
-
+        this.size = Settings.mapSize;
+        this.tileSize = Settings.tileSize;
+        this.pos = new Vector2(0, 0);
+        
         tiles = new Tile[(int)size.X, (int)size.Y];
 
+        CreateMap();
+    }
+
+    public void CreateMap()
+    {
         for (int x = 0; x < tiles.GetLength(0); x++)
         {
             for (int y = 0; y < tiles.GetLength(1); y++)
             {
-                tiles[x, y] = new Tile(new Vector2(x * Settings.tileSize.X, y * Settings.tileSize.Y), Settings.tileSize, Settings.primaryMapColor);
+                Color c = (x + y) % 2 == 0
+                    ? Settings.primaryMapColor
+                    : Settings.secondaryMapColor;
+
+                tiles[x, y] = new Tile(new Vector2(x * tileSize.X + pos.X, y * tileSize.Y + pos.Y), tileSize, c);
             }
         }
     }
 
     public void Draw()
     {
+        Raylib.DrawRectangle((int)(pos.X - tileSize.X), (int)(pos.Y - tileSize.Y), (int)(tileSize.X * (size.X+2)), (int)(tileSize.Y * (size.Y+2)), Settings.borderColor);
         for (int x = 0; x < tiles.GetLength(0); x++)
         {
             for (int y = 0; y < tiles.GetLength(1); y++)
@@ -32,5 +47,27 @@ internal class Map
                 tiles[x, y].Draw();
             }
         }
+    }
+
+    public void SetPos(Vector2 newPos)
+    {
+        this.pos = newPos;
+        CreateMap();
+    }
+
+    public void SetScale(Vector2 tileSize)
+    {
+        this.tileSize = tileSize;
+        CreateMap();
+    }
+
+    public Vector2 GetPos()
+    {
+        return pos;
+    }
+
+    public Vector2 GetScale()
+    {
+        return tileSize;
     }
 }

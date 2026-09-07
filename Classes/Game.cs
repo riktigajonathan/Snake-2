@@ -20,4 +20,12 @@ internal class Game
             subGames[i].Draw();
         }
     }
+
+    public void Update()
+    {
+        for (int i = 0; i < subGames.Count; i++)
+        {
+            subGames[i].Update();
+        }
+    }
 }

@@ -23,6 +23,13 @@ internal class Settings
             (float)Raylib.GetScreenHeight() / gameScreenHeight
         );
     }
+    public static Vector2 GetCenter()
+    {
+        return new Vector2(
+            Settings.gameScreenWidth / 2f,
+            Settings.gameScreenHeight / 2f
+        );
+    }
 
     public static Color bgColor = new(124, 144, 255);
     public static Color borderColor = new(255, 166, 124);

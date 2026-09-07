@@ -48,6 +48,7 @@ internal static class Program
             // ---------- update ----------
 
             Mouse.Update();
+            game.Update();
 
             // ---------- end update ----------
 
