@@ -29,4 +29,7 @@ internal class Settings
     public static Color primaryMapColor = new(178, 255, 168);
     public static Color secondaryMapColor = new(172, 239, 153);
     public static Color snakeColor = new(255, 148, 142);
+
+    public static Vector2 mapSize = new Vector2(10, 9);
+    public static Vector2 tileSize = new Vector2(10, 10);
 }

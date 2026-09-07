@@ -29,8 +29,6 @@ internal static class Program
             TextureFilter.Point
         );
 
-        Raylib.SetTargetFPS(-1);
-
         Camera2D camera = new Camera2D
         {
             Target = Settings.cameraPosition,
@@ -42,6 +40,8 @@ internal static class Program
 
             Zoom = Settings.cameraZoom
         };
+
+        Game game = new Game();
 
         while (!Raylib.WindowShouldClose())
         {
@@ -57,7 +57,7 @@ internal static class Program
 
             // ---------- draw ----------
 
-            Raylib.DrawRectangle((int)(Settings.gameScreenWidth / 2f) - 32, (int)(Settings.gameScreenHeight / 2f) - 24, 64, 48, Settings.borderColor);
+            game.Draw();
 
             // ---------- end draw ----------
 
