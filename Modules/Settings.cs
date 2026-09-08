@@ -35,9 +35,9 @@ internal class Settings
     public static Color borderColor = new(255, 166, 124);
     public static Color primaryMapColor = new(178, 255, 168);
     public static Color secondaryMapColor = new(172, 239, 153);
-    public static Color snakeColor = new(255, 148, 142);
+    public static Color snakeColor = new(178, 100, 237);
 
     public static Vector2 mapSize = new Vector2(10, 9);
     public static Vector2 tileSize = new Vector2(10, 10);
-    public static float moveDelay = 0.5f;
+    public static float moveDelay = 0.1f;
 }

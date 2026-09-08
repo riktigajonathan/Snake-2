@@ -35,8 +35,8 @@ internal class Tile
         }
 
         Raylib.DrawRectangle(
-            (int)(visualPos.X+offset.X), 
-            (int)(visualPos.Y+offset.Y), 
+            (int)Math.Round(visualPos.X+offset.X), 
+            (int)Math.Round(visualPos.Y+offset.Y), 
             (int)size.X, 
             (int)size.Y, 
             color
@@ -54,6 +54,7 @@ internal class Tile
         if (timer > 0)
         {
             visualPos = Vector2.Lerp(visualPos, pos, dt / timer);
+
             timer -= dt;
         }
         else
