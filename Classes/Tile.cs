@@ -21,9 +21,27 @@ internal class Tile
 
     public void Draw(Vector2? _offset = null) 
     {
-        Vector2 offset = Vector2.Zero;
-        if (_offset != null) offset = (Vector2)_offset;
+        Vector2 offset;
+        if (_offset == null)
+        {
+            offset = Vector2.Zero;
+        }
+        else
+        {
+            offset = (Vector2)_offset;
+        }
 
-        Raylib.DrawRectangle((int)(pos.X+offset.X), (int)(pos.Y+offset.Y), (int)size.X, (int)size.Y, color);
+        Raylib.DrawRectangle(
+            (int)(pos.X+offset.X), 
+            (int)(pos.Y+offset.Y), 
+            (int)size.X, 
+            (int)size.Y, 
+            color
+        );
+    }
+
+    public void Move(Vector2 dir)
+    {
+        pos += dir * size;
     }
 }

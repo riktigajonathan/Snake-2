@@ -22,13 +22,13 @@ internal class SubGame
             center.Y - (map.size.Y * scale.Y) / 2f
         ));
 
-        snake = new();
+        snake = new(Vector2.Zero);
     }
 
     public void Draw()
     {
         map.Draw();
-        snake.Draw();
+        snake.Draw(map.GetPos());
     }
 
     public void Update()
