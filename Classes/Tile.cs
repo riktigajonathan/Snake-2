@@ -9,12 +9,15 @@ namespace Snake_2;
 internal class Tile
 {
     public Vector2 pos;
+    public Vector2 visualPos;
     public Vector2 size;
     public Color color;
+    public float timer = 0;
 
     public Tile(Vector2 pos, Vector2 size, Color color)
     {
         this.pos = pos;
+        this.visualPos = pos;
         this.size = size;
         this.color = color;
     }
@@ -32,16 +35,30 @@ internal class Tile
         }
 
         Raylib.DrawRectangle(
-            (int)(pos.X+offset.X), 
-            (int)(pos.Y+offset.Y), 
+            (int)(visualPos.X+offset.X), 
+            (int)(visualPos.Y+offset.Y), 
             (int)size.X, 
             (int)size.Y, 
             color
         );
     }
 
-    public void Move(Vector2 dir)
+    public void Move(Vector2 newPos)
     {
-        pos += dir * size;
+        pos = newPos;
+        timer = Settings.moveDelay;
+    }
+
+    public void UpdateTween(float dt)
+    {
+        if (timer > 0)
+        {
+            visualPos = Vector2.Lerp(visualPos, pos, dt / timer);
+            timer -= dt;
+        }
+        else
+        {
+            visualPos = pos;
+        }
     }
 }

@@ -8,14 +8,15 @@ namespace Snake_2;
 
 internal class Snake
 {
-    List<Tile> body = new();
-    Vector2 dir = new Vector2(1,0);
+    public List<Tile> body = new();
+    public Vector2 dir = new Vector2(1,0);
 
     Vector2 pos;
     Vector2 tileSize;
     Color color;
 
-    float moveDelay = 0;
+    bool inputThisFrame = false;
+    float moveTimer = 0;
 
     public Snake(Vector2 pos, int length = 2)
     {
@@ -24,6 +25,7 @@ internal class Snake
         this.color = Settings.snakeColor;
 
         CreateSnake(length);
+        InitKeybinds();
     }
 
     public void CreateSnake(int length = 0)
@@ -32,35 +34,53 @@ internal class Snake
 
         for (int i = 0; i <= length; i++)
         {
-            var tile = new Tile(new Vector2(pos.X * tileSize.X + pos.X, pos.Y * tileSize.Y + pos.Y), tileSize, color);
+            Vector2 spawnPos = new Vector2(pos.X * tileSize.X + pos.X, pos.Y * tileSize.Y + pos.Y);
+            var tile = new Tile(spawnPos, tileSize, color);
 
             body.Add(tile);
         }
     }
 
+    public void InitKeybinds()
+    {
+        Game.keybinds.Add(KeyboardKey.Up, () => { if (inputThisFrame) return; dir = dir == new Vector2(0, 1) ? dir : new Vector2(0, -1); inputThisFrame = true; });
+        Game.keybinds.Add(KeyboardKey.Down, () => { if (inputThisFrame) return; dir = dir == new Vector2(0, -1) ? dir : new Vector2(0, 1); inputThisFrame = true; });
+        Game.keybinds.Add(KeyboardKey.Right, () => { if (inputThisFrame) return; dir = dir == new Vector2(-1, 0) ? dir : new Vector2(1, 0); inputThisFrame = true; });
+        Game.keybinds.Add(KeyboardKey.Left, () => { if (inputThisFrame) return; dir = dir == new Vector2(1, 0) ? dir : new Vector2(-1, 0); inputThisFrame = true; });
+    }
+
     public void Update()
     {
-        if (moveDelay <= 0)
+        float dt = Raylib.GetFrameTime();
+
+        if (moveTimer <= 0)
         {
             Move(dir);
-            moveDelay = Settings.moveDelay;
         }
         else
         {
-            moveDelay -= Raylib.GetFrameTime();
+            moveTimer -= dt;
+        }
+
+        for (int i = 0; i < body.Count; i++)
+        {
+            body[i].UpdateTween(dt);
         }
     }
 
     public void Move(Vector2 dir)
     {
-        body[0].Move(dir);
-
-        if (body.Count < 1) return;
+        moveTimer = Settings.moveDelay;
+        inputThisFrame = false;
 
         for (int i = body.Count - 1; i >= 1; i--)
         {
             body[i].pos = body[i - 1].pos;
+            body[i].Move(body[i - 1].pos);
         }
+
+        Vector2 newHeadPos = body[0].pos + dir * body[0].size;
+        body[0].Move(newHeadPos);
     }
 
     public void Draw(Vector2 offset)
@@ -83,13 +103,6 @@ internal class Snake
         CreateSnake();
     }
 
-    public Vector2 GetPos()
-    {
-        return pos;
-    }
-
-    public Vector2 GetScale()
-    {
-        return tileSize;
-    }
+    public Vector2 GetPos() => pos;
+    public Vector2 GetScale() => tileSize;
 }

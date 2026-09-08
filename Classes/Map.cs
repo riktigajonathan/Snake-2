@@ -61,13 +61,6 @@ internal class Map
         CreateMap();
     }
 
-    public Vector2 GetPos()
-    {
-        return pos;
-    }
-
-    public Vector2 GetScale()
-    {
-        return tileSize;
-    }
+    public Vector2 GetPos() => pos;
+    public Vector2 GetScale() => tileSize;
 }

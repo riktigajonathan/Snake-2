@@ -39,5 +39,5 @@ internal class Settings
 
     public static Vector2 mapSize = new Vector2(10, 9);
     public static Vector2 tileSize = new Vector2(10, 10);
-    public static float moveDelay = 1;
+    public static float moveDelay = 0.5f;
 }
