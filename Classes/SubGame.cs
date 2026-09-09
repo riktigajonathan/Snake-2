@@ -11,16 +11,10 @@ internal class SubGame
     Map map;
     Snake snake;
 
-    public SubGame()
+    public SubGame(Vector2 pos)
     {
         map = new();
-
-        Vector2 center = Settings.GetCenter();
-        Vector2 scale = map.GetScale();
-        map.SetPos(new Vector2(
-            center.X - (map.size.X * scale.X) / 2f,
-            center.Y - (map.size.Y * scale.Y) / 2f
-        ));
+        map.SetPos(pos);
 
         snake = new(Vector2.Zero);
     }

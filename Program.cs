@@ -40,7 +40,12 @@ internal static class Program
             Zoom = Settings.cameraZoom
         };
 
-        Game.AddSubGame();
+        Vector2 center = Settings.GetCenter();
+        var gamePos = new Vector2(
+            center.X - (Settings.mapSize.X * Settings.tileSize.X) / 2f,
+            center.Y - (Settings.mapSize.Y * Settings.tileSize.Y) / 2f
+        );
+        Game.AddSubGame(gamePos);
 
         while (!Raylib.WindowShouldClose())
         {
