@@ -46,7 +46,7 @@ internal class Tile
     public void Move(Vector2 newPos)
     {
         pos = newPos;
-        timer = Settings.moveDelay;
+        timer = Settings.moveTransition;
     }
 
     public void UpdateTween(float dt)

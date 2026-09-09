@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 using Raylib_cs;
 
 namespace Snake_2;
@@ -9,57 +8,64 @@ namespace Snake_2;
 internal class Snake
 {
     public List<Tile> body = new();
-    public Vector2 dir = new Vector2(1,0);
+    public Vector2 dir = new Vector2(1, 0);
 
     Vector2 pos;
     Vector2 tileSize;
     Color color;
 
-    bool inputThisFrame = false;
+    List<Vector2> moveQueue = new();
     float moveTimer = 0;
 
-    public Snake(Vector2 pos, int length = 2)
+    public Snake(Vector2 pos)
     {
         this.pos = pos;
         this.tileSize = Settings.tileSize;
         this.color = Settings.snakeColor;
 
-        CreateSnake(length);
+        CreateSnake(Settings.startLength);
         InitKeybinds();
     }
 
-    public void CreateSnake(int length = 0)
+    public void CreateSnake(int length = 3)
     {
-        if (length == 0) { length = body.Count; }
+        body.Clear();
 
-        for (int i = 0; i <= length; i++)
+        Vector2 headPixelPos = new Vector2(pos.X * (tileSize.X + 1), pos.Y * (tileSize.Y + 1));
+
+        for (int i = 0; i < length; i++)
         {
-            Vector2 spawnPos = new Vector2(pos.X * tileSize.X + pos.X, pos.Y * tileSize.Y + pos.Y);
-            var tile = new Tile(spawnPos, tileSize, color);
-
-            body.Add(tile);
+            Vector2 segmentPos = headPixelPos - new Vector2(i * tileSize.X, 0);
+            body.Add(new Tile(segmentPos, tileSize, color));
         }
     }
 
     public void InitKeybinds()
     {
-        Game.keybinds.Add(KeyboardKey.Up, () => { if (inputThisFrame) return; dir = dir == new Vector2(0, 1) ? dir : new Vector2(0, -1); inputThisFrame = true; });
-        Game.keybinds.Add(KeyboardKey.Down, () => { if (inputThisFrame) return; dir = dir == new Vector2(0, -1) ? dir : new Vector2(0, 1); inputThisFrame = true; });
-        Game.keybinds.Add(KeyboardKey.Right, () => { if (inputThisFrame) return; dir = dir == new Vector2(-1, 0) ? dir : new Vector2(1, 0); inputThisFrame = true; });
-        Game.keybinds.Add(KeyboardKey.Left, () => { if (inputThisFrame) return; dir = dir == new Vector2(1, 0) ? dir : new Vector2(-1, 0); inputThisFrame = true; });
+        Game.keybinds.Add(KeyboardKey.Up, () => QueueDirection(new Vector2(0, -1)));
+        Game.keybinds.Add(KeyboardKey.Down, () => QueueDirection(new Vector2(0, 1)));
+        Game.keybinds.Add(KeyboardKey.Left, () => QueueDirection(new Vector2(-1, 0)));
+        Game.keybinds.Add(KeyboardKey.Right, () => QueueDirection(new Vector2(1, 0)));
+    }
+
+    private void QueueDirection(Vector2 newDir)
+    {
+        Vector2 lastDir = moveQueue.Count > 0 ? moveQueue[moveQueue.Count - 1] : dir;
+
+        if (lastDir + newDir != Vector2.Zero && moveQueue.Count < 3)
+        {
+            moveQueue.Add(newDir);
+        }
     }
 
     public void Update()
     {
         float dt = Raylib.GetFrameTime();
 
+        moveTimer -= dt;
         if (moveTimer <= 0)
         {
-            Move(dir);
-        }
-        else
-        {
-            moveTimer -= dt;
+            Move();
         }
 
         for (int i = 0; i < body.Count; i++)
@@ -68,24 +74,28 @@ internal class Snake
         }
     }
 
-    public void Move(Vector2 dir)
+    public void Move()
     {
         moveTimer = Settings.moveDelay;
-        inputThisFrame = false;
+
+        if (moveQueue.Count > 0)
+        {
+            dir = moveQueue[0];
+            moveQueue.RemoveAt(0);
+        }
 
         for (int i = body.Count - 1; i >= 1; i--)
         {
-            body[i].pos = body[i - 1].pos;
             body[i].Move(body[i - 1].pos);
         }
 
-        Vector2 newHeadPos = body[0].pos + dir * body[0].size;
+        Vector2 newHeadPos = body[0].pos + (dir * tileSize);
         body[0].Move(newHeadPos);
     }
 
     public void Draw(Vector2 offset)
     {
-        for (int i = 0;i < body.Count; i++)
+        for (int i = 0; i < body.Count; i++)
         {
             body[i].Draw(offset);
         }
@@ -94,13 +104,13 @@ internal class Snake
     public void SetPos(Vector2 newPos)
     {
         this.pos = newPos;
-        CreateSnake();
+        CreateSnake(body.Count > 0 ? body.Count : Settings.startLength);
     }
 
     public void SetScale(Vector2 tileSize)
     {
         this.tileSize = tileSize;
-        CreateSnake();
+        CreateSnake(body.Count > 0 ? body.Count : Settings.startLength);
     }
 
     public Vector2 GetPos() => pos;

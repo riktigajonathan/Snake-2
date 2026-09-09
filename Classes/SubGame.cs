@@ -22,7 +22,7 @@ internal class SubGame
             center.Y - (map.size.Y * scale.Y) / 2f
         ));
 
-        snake = new(Vector2.Zero, 8);
+        snake = new(Vector2.Zero);
     }
 
     public void Draw()
