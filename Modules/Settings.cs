@@ -42,5 +42,5 @@ internal class Settings
 
     public static float moveDelay = 0.1f;
     public static float moveTransition = 0f;
-    public static int startLength = 3;
+    public static int startLength = 5;
 }

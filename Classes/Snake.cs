@@ -33,10 +33,11 @@ internal class Snake
 
         Vector2 headPixelPos = new Vector2(pos.X * (tileSize.X + 1), pos.Y * (tileSize.Y + 1));
 
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i <= length; i++)
         {
-            Vector2 segmentPos = headPixelPos - new Vector2(i * tileSize.X, 0);
-            body.Add(new Tile(segmentPos, tileSize, color));
+            Vector2 spawnPos = new Vector2(pos.X * tileSize.X + pos.X, pos.Y * tileSize.Y + pos.Y);
+            var tile = new Tile(spawnPos, tileSize, color);
+            body.Add(tile);
         }
     }
 
@@ -85,7 +86,7 @@ internal class Snake
         }
 
         Vector2 newHeadPos = body[0].pos + (dir * tileSize);
-        if (DeadlyCollision(newHeadPos / tileSize))
+        if (MapOccupied(newHeadPos / tileSize))
         {
             Game.Die();
         }
@@ -93,12 +94,17 @@ internal class Snake
         for (int i = body.Count - 1; i >= 1; i--)
         {
             body[i].Move(body[i - 1].pos);
+            
+            if (body[i].pos == newHeadPos)
+            {
+                Game.Die();
+            }
         }
 
         body[0].Move(newHeadPos);
     }
 
-    bool DeadlyCollision(Vector2 pos)
+    bool MapOccupied(Vector2 pos)
     {
         return Game.subGames[Game.currentSubGame].GetMap().OccupiedAt(pos);
     }
