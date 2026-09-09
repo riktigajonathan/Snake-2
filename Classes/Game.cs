@@ -5,28 +5,32 @@ using System.Text;
 
 namespace Snake_2;
 
-internal class Game
+internal static class Game
 {
     public static Dictionary<KeyboardKey, Action> keybinds = new();
-    List<SubGame> subGames = new();
-
-    public Game()
+    public static List<SubGame> subGames = new();
+    public static int currentSubGame = 0;
+        
+    public static void AddSubGame()
     {
         subGames.Add(new SubGame());
     }
 
-    public void Draw()
+    public static void Draw()
     {
+        if (subGames.Count <= 0) return;
+
         for (int i = 0; i < subGames.Count; i++)
         {
             subGames[i].Draw();
         }
     }
 
-    public void Update()
+    public static void Update()
     {
-        int pressedKey = Raylib.GetKeyPressed();
+        if (subGames.Count <= 0) return;
 
+        int pressedKey = Raylib.GetKeyPressed();
         if (pressedKey != 0)
         {
             KeyboardKey key = (KeyboardKey)pressedKey;
@@ -37,10 +41,12 @@ internal class Game
             }
         }
 
+        subGames[currentSubGame].Update();
+    }
 
-        for (int i = 0; i < subGames.Count; i++)
-        {
-            subGames[i].Update();
-        }
+    public static void Die()
+    {
+        subGames.RemoveAt(currentSubGame);
+        currentSubGame -= 1;
     }
 }

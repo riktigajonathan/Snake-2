@@ -35,4 +35,6 @@ internal class SubGame
     {
         snake.Update();
     }
+
+    public Map GetMap() => map;
 }

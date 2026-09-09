@@ -84,13 +84,23 @@ internal class Snake
             moveQueue.RemoveAt(0);
         }
 
+        Vector2 newHeadPos = body[0].pos + (dir * tileSize);
+        if (DeadlyCollision(newHeadPos / tileSize))
+        {
+            Game.Die();
+        }
+
         for (int i = body.Count - 1; i >= 1; i--)
         {
             body[i].Move(body[i - 1].pos);
         }
 
-        Vector2 newHeadPos = body[0].pos + (dir * tileSize);
         body[0].Move(newHeadPos);
+    }
+
+    bool DeadlyCollision(Vector2 pos)
+    {
+        return Game.subGames[Game.currentSubGame].GetMap().OccupiedAt(pos);
     }
 
     public void Draw(Vector2 offset)

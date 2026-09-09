@@ -49,6 +49,11 @@ internal class Map
         }
     }
 
+    public bool OccupiedAt(Vector2 pos)
+    {
+        return pos.X < 0 || pos.Y < 0 || pos.X >= size.X || pos.Y >= size.Y;
+    }
+
     public void SetPos(Vector2 newPos)
     {
         this.pos = newPos;

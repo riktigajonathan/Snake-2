@@ -40,14 +40,14 @@ internal static class Program
             Zoom = Settings.cameraZoom
         };
 
-        Game game = new Game();
+        Game.AddSubGame();
 
         while (!Raylib.WindowShouldClose())
         {
             // ---------- update ----------
 
             Mouse.Update();
-            game.Update();
+            Game.Update();
 
             // ---------- end update ----------
 
@@ -57,7 +57,7 @@ internal static class Program
 
             // ---------- draw ----------
 
-            game.Draw();
+            Game.Draw();
 
             // ---------- end draw ----------
 
