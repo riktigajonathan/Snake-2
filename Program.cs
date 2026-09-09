@@ -63,6 +63,13 @@ internal static class Program
             // ---------- draw ----------
 
             Game.Draw();
+            Raylib.DrawText(
+                $"FPS: {Raylib.GetFPS()}",
+                0,
+                0,
+                10,
+                Color.White
+            );
 
             // ---------- end draw ----------
 
