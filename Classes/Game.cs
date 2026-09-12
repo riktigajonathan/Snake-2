@@ -8,7 +8,6 @@ namespace Snake_2;
 
 internal static class Game
 {
-    public static Dictionary<KeyboardKey, Action> keybinds = new();
     public static List<SubGame> subGames = new();
     public static int currentSubGame = 0;
         
@@ -30,17 +29,6 @@ internal static class Game
     public static void Update()
     {
         if (subGames.Count <= 0) return;
-
-        int pressedKey = Raylib.GetKeyPressed();
-        if (pressedKey != 0)
-        {
-            KeyboardKey key = (KeyboardKey)pressedKey;
-
-            if (keybinds.TryGetValue(key, out Action? action))
-            {
-                action.Invoke();
-            }
-        }
 
         subGames[currentSubGame].Update();
     }

@@ -24,7 +24,6 @@ internal class Snake
         this.color = Settings.snakeColor;
 
         CreateSnake(Settings.startLength);
-        InitKeybinds();
     }
 
     public void CreateSnake(int length = 3)
@@ -41,15 +40,7 @@ internal class Snake
         }
     }
 
-    public void InitKeybinds()
-    {
-        Game.keybinds.Add(KeyboardKey.Up, () => QueueDirection(new Vector2(0, -1)));
-        Game.keybinds.Add(KeyboardKey.Down, () => QueueDirection(new Vector2(0, 1)));
-        Game.keybinds.Add(KeyboardKey.Left, () => QueueDirection(new Vector2(-1, 0)));
-        Game.keybinds.Add(KeyboardKey.Right, () => QueueDirection(new Vector2(1, 0)));
-    }
-
-    private void QueueDirection(Vector2 newDir)
+    public void QueueDirection(Vector2 newDir)
     {
         Vector2 lastDir = moveQueue.Count > 0 ? moveQueue[moveQueue.Count - 1] : dir;
 
