@@ -70,6 +70,18 @@ internal class Snake
     {
         moveTimer = Settings.moveDelay;
 
+        if (Settings.autoplay)
+        {
+            if (Settings.autoplayIndex < Settings.autoplayQueue.Length)
+            {
+                dir = Settings.autoplayQueue[Settings.autoplayIndex];
+                Settings.autoplayIndex++;
+            }
+            if (Settings.autoplayIndex == Settings.autoplayQueue.Length)
+            {
+                Settings.autoplayIndex = 0;
+            }
+        }
         if (moveQueue.Count > 0)
         {
             dir = moveQueue[0];
