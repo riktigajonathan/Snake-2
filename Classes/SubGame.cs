@@ -9,15 +9,19 @@ namespace Snake_2;
 internal class SubGame
 {
     public Dictionary<KeyboardKey, Action> keybinds = new();
+    public SubGame parent;
     Map map;
     Snake snake;
+    List<SubGame> food = new();
 
-    public SubGame(Vector2 pos)
+    public SubGame(Vector2 pos, SubGame parent = null)
     {
-        map = new();
+        this.parent = parent;
+        this.map = new();
+        this.snake = new(Vector2.Zero);
+
         map.SetPos(pos);
 
-        snake = new(Vector2.Zero);
         InitKeybinds();
     }
 
@@ -53,6 +57,11 @@ internal class SubGame
         }
 
         snake.Update();
+    }
+
+    public void Die()
+    {
+        
     }
 
     public Map GetMap() => map;

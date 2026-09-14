@@ -109,7 +109,7 @@ internal class Snake
 
     bool MapOccupied(Vector2 pos)
     {
-        return Game.subGames[Game.currentSubGame].GetMap().OccupiedAt(pos);
+        return Game.currentSubGame.GetMap().OccupiedAt(pos);
     }
 
     public void Draw(Vector2 offset)

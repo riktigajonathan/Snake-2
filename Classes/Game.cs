@@ -9,18 +9,20 @@ namespace Snake_2;
 internal static class Game
 {
     public static List<SubGame> subGames = new();
-    public static int currentSubGame = 0;
-        
+    public static SubGame currentSubGame = null;
+
     public static void AddSubGame(Vector2 pos)
     {
-        subGames.Add(new SubGame(pos));
+        var subGame = new SubGame(pos);
+        subGames.Add(subGame);
+        currentSubGame = subGame;
     }
 
     public static void Draw()
     {
         if (subGames.Count <= 0) return;
 
-        for (int i = 0; i < subGames.Count; i++)
+        for (int i = 0; i < subGames.Count; i++) // todo: only draw visible
         {
             subGames[i].Draw();
         }
@@ -30,12 +32,11 @@ internal static class Game
     {
         if (subGames.Count <= 0) return;
 
-        subGames[currentSubGame].Update();
+        currentSubGame.Update();
     }
 
     public static void Die()
     {
-        subGames.RemoveAt(currentSubGame);
-        currentSubGame -= 1;
+        currentSubGame.Die();
     }
 }
