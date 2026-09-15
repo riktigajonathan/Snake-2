@@ -45,7 +45,6 @@ internal class Settings
     public static int startLength = 5;
 
     public static bool autoplay = true;
-    public static int autoplayIndex = 0;
     public static Vector2[] autoplayQueue =
     [
         new(1,0), new(1,0), new(1,0), new(1,0), new(1,0),

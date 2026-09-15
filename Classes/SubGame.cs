@@ -12,7 +12,7 @@ internal class SubGame
     public SubGame parent;
     Map map;
     Snake snake;
-    List<SubGame> food = new();
+    List<Food> food = new();
 
     public SubGame(Vector2 pos, SubGame parent = null)
     {
@@ -61,7 +61,8 @@ internal class SubGame
 
     public void Die()
     {
-        
+        Game.subGames.Remove(this);
+        Game.currentSubGame = parent;
     }
 
     public Map GetMap() => map;

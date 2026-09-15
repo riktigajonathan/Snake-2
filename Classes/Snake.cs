@@ -16,6 +16,7 @@ internal class Snake
 
     List<Vector2> moveQueue = new();
     float moveTimer = 0;
+    int autoplayIndex = 0;
 
     public Snake(Vector2 pos)
     {
@@ -72,14 +73,14 @@ internal class Snake
 
         if (Settings.autoplay)
         {
-            if (Settings.autoplayIndex < Settings.autoplayQueue.Length)
+            if (autoplayIndex < Settings.autoplayQueue.Length)
             {
-                dir = Settings.autoplayQueue[Settings.autoplayIndex];
-                Settings.autoplayIndex++;
+                dir = Settings.autoplayQueue[autoplayIndex];
+                autoplayIndex++;
             }
-            if (Settings.autoplayIndex == Settings.autoplayQueue.Length)
+            if (autoplayIndex == Settings.autoplayQueue.Length)
             {
-                Settings.autoplayIndex = 0;
+                autoplayIndex = 0;
             }
         }
         if (moveQueue.Count > 0)
