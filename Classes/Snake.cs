@@ -15,7 +15,7 @@ internal class Snake
     Color color;
 
     List<Vector2> moveQueue = new();
-    float moveTimer = 0;
+    float moveTimer = Settings.moveDelay;
     int autoplayIndex = 0;
 
     public Snake(Vector2 pos)
@@ -24,7 +24,7 @@ internal class Snake
         this.tileSize = Settings.tileSize;
         this.color = Settings.snakeColor;
 
-        CreateSnake(Settings.startLength);
+        CreateSnake(Settings.startLength-1);
     }
 
     public void CreateSnake(int length = 3)

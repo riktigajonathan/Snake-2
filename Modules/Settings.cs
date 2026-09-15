@@ -36,15 +36,19 @@ internal class Settings
     public static Color primaryMapColor = new(178, 255, 168);
     public static Color secondaryMapColor = new(172, 239, 153);
     public static Color snakeColor = new(178, 100, 237);
+    public static Color foodColor = new(255, 148, 142);
 
     public static Vector2 mapSize = new Vector2(10, 9);
     public static Vector2 tileSize = new Vector2(10, 10);
 
-    public static float moveDelay = 0.01f;
+    public static float moveDelay = 0.25f;
     public static float moveTransition = 0f;
-    public static int startLength = 5;
+    
+    public static int startLength = 3;
+    public static int appleCount = 5;
+    public static int gameDepth = 0;
 
-    public static bool autoplay = true;
+    public static bool autoplay = false;
     public static Vector2[] autoplayQueue =
     [
         new(1,0), new(1,0), new(1,0), new(1,0), new(1,0),

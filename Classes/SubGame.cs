@@ -10,6 +10,7 @@ internal class SubGame
 {
     public Dictionary<KeyboardKey, Action> keybinds = new();
     public SubGame parent;
+
     Map map;
     Snake snake;
     List<Food> food = new();
