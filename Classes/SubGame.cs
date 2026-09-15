@@ -10,6 +10,7 @@ internal class SubGame
 {
     public Dictionary<KeyboardKey, Action> keybinds = new();
     public SubGame parent;
+    public int depth = 0;
 
     Map map;
     Snake snake;
@@ -20,6 +21,11 @@ internal class SubGame
         this.parent = parent;
         this.map = new();
         this.snake = new(Vector2.Zero);
+
+        if (parent != null)
+        {
+            depth = parent.depth + 1;
+        }
 
         map.SetPos(pos);
 
