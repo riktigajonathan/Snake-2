@@ -26,8 +26,8 @@ internal class Settings
     public static Vector2 GetCenter()
     {
         return new Vector2(
-            Settings.gameScreenWidth / 2f,
-            Settings.gameScreenHeight / 2f
+            gameScreenWidth / 2f,
+            gameScreenHeight / 2f
         );
     }
 
