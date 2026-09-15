@@ -43,12 +43,12 @@ internal class Settings
 
     public static float moveDelay = 0.1f;
     public static float moveTransition = 0.11f;
-    
+
     public static int startLength = 6;
     public static int appleCount = 5;
     public static int gameDepth = 0;
 
-    public static bool autoplay = false;
+    public static bool autoplay = true;
     public static Vector2[] autoplayQueue =
     [
         new(1,0), new(1,0), new(1,0), new(1,0), new(1,0),

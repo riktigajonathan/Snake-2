@@ -14,13 +14,14 @@ internal class SubGame
 
     Map map;
     Snake snake;
-    List<Food> food = new();
+    List<Food> food;
 
     public SubGame(Vector2 pos, SubGame parent = null)
     {
         this.parent = parent;
         this.map = new();
         this.snake = new(Vector2.Zero);
+        this.food = new();
 
         if (parent != null)
         {
@@ -44,6 +45,11 @@ internal class SubGame
     {
         map.Draw();
 
+        for (int i = 0; i < food.Count; i++)
+        {
+            food[i].Draw();
+        }
+
         if (snake != null)
         {
             snake.Draw(map.GetPos());
@@ -61,6 +67,11 @@ internal class SubGame
             {
                 action.Invoke();
             }
+        }
+
+        for (int i = 0;i < food.Count;i++)
+        {
+            food[i].Update();
         }
 
         snake.Update();
