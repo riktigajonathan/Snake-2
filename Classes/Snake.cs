@@ -90,7 +90,7 @@ internal class Snake
         }
 
         Vector2 newHeadPos = body[0].pos + (dir * tileSize);
-        if (MapOccupied(newHeadPos / tileSize))
+        if (Game.currentSubGame.MapOccupied(newHeadPos))
         {
             Game.Die();
         }
@@ -98,7 +98,7 @@ internal class Snake
         for (int i = body.Count - 1; i >= 1; i--)
         {
             body[i].Move(body[i - 1].pos);
-            
+
             if (body[i].pos == newHeadPos)
             {
                 Game.Die();
@@ -108,17 +108,24 @@ internal class Snake
         body[0].Move(newHeadPos);
     }
 
-    bool MapOccupied(Vector2 pos)
-    {
-        return Game.currentSubGame.GetMap().OccupiedAt(pos);
-    }
-
     public void Draw(Vector2 offset)
     {
         for (int i = 0; i < body.Count; i++)
         {
             body[i].Draw(offset);
         }
+    }
+
+    public bool BodyAt(Vector2 pos)
+    {
+        for (int i = body.Count - 1; i >= 1; i--)
+        {
+            if (body[i].pos == pos)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void SetPos(Vector2 newPos)

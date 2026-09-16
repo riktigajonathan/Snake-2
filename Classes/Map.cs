@@ -51,6 +51,7 @@ internal class Map
 
     public bool OccupiedAt(Vector2 pos)
     {
+        pos /= tileSize;
         return pos.X < 0 || pos.Y < 0 || pos.X >= size.X || pos.Y >= size.Y;
     }
 

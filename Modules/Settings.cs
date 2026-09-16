@@ -48,6 +48,8 @@ internal class Settings
     public static int appleCount = 5;
     public static int gameDepth = 0;
 
+    public static readonly Random rng = new Random();
+
     public static bool autoplay = true;
     public static Vector2[] autoplayQueue =
     [

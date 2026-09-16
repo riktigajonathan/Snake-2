@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Raylib_cs;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Numerics;
-using Raylib_cs;
+using System.Text;
 
 namespace Snake_2;
 
@@ -15,6 +15,8 @@ internal class SubGame
     Map map;
     Snake snake;
     List<Food> food;
+
+    Vector2 offset = Vector2.Zero;
 
     public SubGame(Vector2 pos, SubGame parent = null)
     {
@@ -29,6 +31,7 @@ internal class SubGame
         }
 
         map.SetPos(pos);
+        this.offset = map.GetPos();
 
         InitKeybinds();
     }
@@ -47,12 +50,12 @@ internal class SubGame
 
         for (int i = 0; i < food.Count; i++)
         {
-            food[i].Draw();
+            food[i].Draw(offset);
         }
 
         if (snake != null)
         {
-            snake.Draw(map.GetPos());
+            snake.Draw(offset);
         }
     }
 
@@ -75,6 +78,8 @@ internal class SubGame
         }
 
         snake.Update();
+        
+        SpawnFood();
     }
 
     public void Die()
@@ -83,5 +88,35 @@ internal class SubGame
         Game.currentSubGame = parent;
     }
 
+    public void SpawnFood()
+    {
+        List<Vector2> spawnablePos = new();
+
+        for (int i = 0; i < map.size.X; i++)
+        {
+            for (int j = 0; j < map.size.Y; j++)
+            {
+                var pos = new Vector2(i, j);
+                if (!snake.BodyAt(pos * snake.GetScale()))
+                {
+                    spawnablePos.Add(pos);
+                }
+            }
+        }
+
+        for (int i = 0; i < food.Count; i++)
+        {
+            spawnablePos.Remove(food[i].tile.pos / food[i].tile.size);
+        }
+
+        if (spawnablePos.Count > 0)
+        {
+            var newFood = new Food(spawnablePos[Settings.rng.Next(0, spawnablePos.Count)]);
+            food.Add(newFood);
+        }
+    }
+
+    public void SetPos(Vector2 newPos) => offset = newPos;
     public Map GetMap() => map;
+    public bool MapOccupied(Vector2 pos) => GetMap().OccupiedAt(pos);
 }

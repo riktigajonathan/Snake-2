@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace Snake_2;
 
 internal class Food
 {
-    SubGame subGame;
-    Tile tile;
+    public SubGame subGame;
+    public Tile tile;
+
+    public Food(Vector2 pos)
+    {
+        Map map = Game.currentSubGame.GetMap();
+
+        this.tile = new Tile(pos * Settings.tileSize, map.GetScale(), Settings.foodColor);
+    }
 
     public void Update()
     {
@@ -17,15 +25,16 @@ internal class Food
         }
     }
 
-    public void Draw()
+    public void Draw(Vector2 offset)
     {
         if (subGame != null)
         {
+            
             subGame.Draw();
         }
         else if (tile != null)
         {
-            tile.Draw();
+            tile.Draw(offset);
         }
     }
 }
