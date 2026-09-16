@@ -7,34 +7,69 @@ namespace Snake_2;
 
 internal class Food
 {
-    public SubGame subGame;
-    public Tile tile;
+    public Tile? tile;
+    public SubGame? subGame;
+
+    public bool eaten = false;
+    public bool queuedDeletion = false;
 
     public Food(Vector2 pos)
     {
+        if (Game.currentSubGame == null) return;
         Map map = Game.currentSubGame.GetMap();
 
-        this.tile = new Tile(pos * Settings.tileSize, map.GetScale(), Settings.foodColor);
+        if (Game.subGames.Count >= Settings.gameDepth + 1) 
+        { 
+            this.tile = new Tile(pos * map.GetScale(), map.GetScale(), Settings.foodColor); 
+        } 
+        else
+        {
+            SubGame foodSubGame = new(Vector2.Zero) // temp position
+            {
+                parent = Game.currentSubGame
+            };
+
+            Game.subGames.Add(foodSubGame);
+        }
     }
 
     public void Update()
     {
-        if (subGame != null)
-        {
-            subGame.Update();
-        }
+        // animations
     }
 
     public void Draw(Vector2 offset)
     {
-        if (subGame != null)
-        {
-            
-            subGame.Draw();
-        }
-        else if (tile != null)
+        if (tile != null)
         {
             tile.Draw(offset);
         }
+    }
+
+    public void Eaten()
+    {
+        if (eaten) return;
+
+        if (tile != null)
+        {
+            queuedDeletion = true;
+            Game.currentSubGame.Grow();
+        }
+        else if (subGame != null)
+        {
+            Game.ChangeSubGameTo(subGame);
+        }
+
+        eaten = true;
+    }
+
+    public Vector2 GetPos()
+    {
+        if (tile != null)
+        {
+            return tile.pos / tile.size;
+        }
+
+        return Vector2.One * -1;
     }
 }

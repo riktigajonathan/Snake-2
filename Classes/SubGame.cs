@@ -72,20 +72,42 @@ internal class SubGame
             }
         }
 
-        for (int i = 0;i < food.Count;i++)
+        snake.Update();
+
+        if (food.Count < Settings.appleCount)
         {
-            food[i].Update();
+            SpawnFood();
         }
 
-        snake.Update();
-        
-        SpawnFood();
+        for (int i = 0; i < food.Count; i++)
+        {
+            food[i].Update();
+
+            if (snake.GetPos() == food[i].GetPos())
+            {
+                food[i].Eaten();
+            }
+
+            if (food[i].queuedDeletion)
+            {
+                food.RemoveAt(i);
+                i--;
+            }
+        }
+    }
+
+    public void Win()
+    {
+        Game.subGames.Remove(this);
+        Game.lastSubGameWon = true;
+        Game.ChangeSubGameTo(parent);
     }
 
     public void Die()
     {
         Game.subGames.Remove(this);
-        Game.currentSubGame = parent;
+        Game.lastSubGameWon = false;
+        Game.ChangeSubGameTo(parent);
     }
 
     public void SpawnFood()
@@ -104,19 +126,34 @@ internal class SubGame
             }
         }
 
-        for (int i = 0; i < food.Count; i++)
+        if (spawnablePos.Count == 0)
         {
-            spawnablePos.Remove(food[i].tile.pos / food[i].tile.size);
+            Win();
         }
 
-        if (spawnablePos.Count > 0)
+        for (int i = 0; i < food.Count; i++)
+        {
+            spawnablePos.Remove(food[i].GetPos());
+        }
+        
+        if (spawnablePos.Count-1 > 0)
         {
             var newFood = new Food(spawnablePos[Settings.rng.Next(0, spawnablePos.Count)]);
             food.Add(newFood);
-        }
+        } 
     }
 
-    public void SetPos(Vector2 newPos) => offset = newPos;
+    public void Grow()
+    {
+        snake.Grow();
+    }
+
+    public void SetPos(Vector2 newPos)
+    {
+        offset = newPos;
+    }
+
     public Map GetMap() => map;
+    public List<Food> GetFood() => food;
     public bool MapOccupied(Vector2 pos) => GetMap().OccupiedAt(pos);
 }

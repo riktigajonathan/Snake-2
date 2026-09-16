@@ -106,6 +106,7 @@ internal class Snake
         }
 
         body[0].Move(newHeadPos);
+        pos = newHeadPos / tileSize;
     }
 
     public void Draw(Vector2 offset)
@@ -113,6 +114,17 @@ internal class Snake
         for (int i = 0; i < body.Count; i++)
         {
             body[i].Draw(offset);
+        }
+    }
+
+    public void Grow(int count = 1)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            var tile = new Tile(body[body.Count-1].pos, tileSize, color);
+            tile.visualPos = body[body.Count-1].visualPos;
+
+            body.Add(tile);
         }
     }
 

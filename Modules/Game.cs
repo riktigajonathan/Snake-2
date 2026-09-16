@@ -10,12 +10,18 @@ internal static class Game
 {
     public static List<SubGame> subGames = new();
     public static SubGame currentSubGame = null;
+    public static bool lastSubGameWon = false;
 
     public static void AddSubGame(Vector2 pos)
     {
         var subGame = new SubGame(pos);
         subGames.Add(subGame);
         currentSubGame = subGame;
+    }
+
+    public static void ChangeSubGameTo(SubGame subgame)
+    {
+        currentSubGame = subgame;
     }
 
     public static void Draw()
@@ -32,11 +38,17 @@ internal static class Game
     {
         if (subGames.Count <= 0) return;
 
-        currentSubGame.Update();
+        if (currentSubGame != null)
+        {
+            currentSubGame.Update();
+        }
     }
 
     public static void Die()
     {
-        currentSubGame.Die();
+        if (currentSubGame != null)
+        {
+            currentSubGame.Die();
+        }
     }
 }
