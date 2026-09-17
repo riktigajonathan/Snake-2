@@ -92,7 +92,7 @@ internal class Snake
         Vector2 newHeadPos = body[0].pos + (dir * tileSize);
         if (Game.currentSubGame.MapOccupied(newHeadPos))
         {
-            Game.Die();
+            SubGame.Die();
         }
 
         for (int i = body.Count - 1; i >= 1; i--)
@@ -101,7 +101,7 @@ internal class Snake
 
             if (body[i].pos == newHeadPos)
             {
-                Game.Die();
+                SubGame.Die();
             }
         }
 

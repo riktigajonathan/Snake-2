@@ -43,12 +43,4 @@ internal static class Game
             currentSubGame.Update();
         }
     }
-
-    public static void Die()
-    {
-        if (currentSubGame != null)
-        {
-            currentSubGame.Die();
-        }
-    }
 }

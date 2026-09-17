@@ -96,18 +96,23 @@ internal class SubGame
         }
     }
 
-    public void Win()
+    static void Exit(bool won)
     {
-        Game.subGames.Remove(this);
-        Game.lastSubGameWon = true;
-        Game.ChangeSubGameTo(parent);
+        SubGame current = Game.currentSubGame;
+
+        Game.subGames.Remove(current);
+        Game.lastSubGameWon = won;
+        Game.ChangeSubGameTo(current.parent);
     }
 
-    public void Die()
+    public static void Win()
     {
-        Game.subGames.Remove(this);
-        Game.lastSubGameWon = false;
-        Game.ChangeSubGameTo(parent);
+        SubGame.Exit(true);
+    }
+
+    public static void Die()
+    {
+        SubGame.Exit(false);
     }
 
     public void SpawnFood()
@@ -128,7 +133,7 @@ internal class SubGame
 
         if (spawnablePos.Count == 0)
         {
-            Win();
+            SubGame.Win();
         }
 
         for (int i = 0; i < food.Count; i++)
