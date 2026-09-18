@@ -131,7 +131,7 @@ internal class SubGame
             }
         }
 
-        if (spawnablePos.Count == 0)
+        if (spawnablePos.Count == 1)
         {
             SubGame.Win();
         }
