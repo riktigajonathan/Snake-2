@@ -18,16 +18,13 @@ internal class Food
         if (Game.currentSubGame == null) return;
         Map map = Game.currentSubGame.GetMap();
 
-        if (Game.subGames.Count >= Settings.gameDepth + 1) 
+        if (Game.currentSubGame.depth >= Settings.gameDepth) 
         { 
             this.tile = new Tile(pos * map.GetScale(), map.GetScale(), Settings.foodColor); 
         } 
         else
         {
-            SubGame foodSubGame = new(Vector2.Zero) // temp position
-            {
-                parent = Game.currentSubGame
-            };
+            SubGame foodSubGame = new(Vector2.Zero, Game.currentSubGame); // temp pos
 
             Game.subGames.Add(foodSubGame);
         }
@@ -53,10 +50,12 @@ internal class Food
         if (tile != null)
         {
             queuedDeletion = true;
-            Game.currentSubGame.Grow();
+            if (Game.currentSubGame != null)
+                Game.currentSubGame.Grow();
         }
         else if (subGame != null)
         {
+            queuedDeletion = true;
             Game.ChangeSubGameTo(subGame);
         }
 
