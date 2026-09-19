@@ -24,9 +24,9 @@ internal class Food
         } 
         else
         {
-            SubGame foodSubGame = new(pos * mapScale, Game.currentSubGame); // temp pos
+            subGame = new(pos * mapScale, Game.currentSubGame); // temp pos
 
-            Game.subGames.Add(foodSubGame);
+            Game.subGames.Add(subGame);
         }
     }
 
