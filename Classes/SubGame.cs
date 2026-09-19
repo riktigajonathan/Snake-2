@@ -53,7 +53,7 @@ internal class SubGame
             food[i].Draw(offset);
         }
 
-        if (snake != null)
+        if (snake != null && Game.currentSubGame == this)
         {
             snake.Draw(offset);
         }

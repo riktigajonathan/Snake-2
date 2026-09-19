@@ -9,6 +9,7 @@ namespace Snake_2;
 internal static class Game
 {
     public static List<SubGame> subGames = new();
+    public static List<RenderTexture2D> textures = new();
     public static SubGame currentSubGame = null;
     public static bool lastSubGameWon = false;
 

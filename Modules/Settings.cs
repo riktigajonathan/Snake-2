@@ -46,7 +46,7 @@ internal class Settings
 
     public static int startLength = 3;
     public static int appleCount = 5;
-    public static int gameDepth = 0;
+    public static int gameDepth = 1;
 
     public static readonly Random rng = new Random();
 

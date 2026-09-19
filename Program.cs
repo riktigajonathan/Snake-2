@@ -22,6 +22,7 @@ internal static class Program
             Settings.gameScreenWidth,
             Settings.gameScreenHeight
         );
+        Game.textures.Add(target);
 
         Raylib.SetTextureFilter(
             target.Texture,
@@ -110,7 +111,11 @@ internal static class Program
             Raylib.EndDrawing();
         }
 
-        Raylib.UnloadRenderTexture(target);
+        for (int i = 0; i < Game.textures.Count; i++)
+        {
+            Raylib.UnloadRenderTexture(Game.textures[i]);
+        }
+
         Raylib.CloseWindow();
     }
 }
