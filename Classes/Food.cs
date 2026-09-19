@@ -16,15 +16,15 @@ internal class Food
     public Food(Vector2 pos)
     {
         if (Game.currentSubGame == null) return;
-        Map map = Game.currentSubGame.GetMap();
+        Vector2 mapScale = Game.currentSubGame.GetMap().GetScale();
 
         if (Game.currentSubGame.depth >= Settings.gameDepth) 
         { 
-            this.tile = new Tile(pos * map.GetScale(), map.GetScale(), Settings.foodColor); 
+            this.tile = new Tile(pos * mapScale, mapScale, Settings.foodColor); 
         } 
         else
         {
-            SubGame foodSubGame = new(pos, Game.currentSubGame); // temp pos
+            SubGame foodSubGame = new(pos * mapScale, Game.currentSubGame); // temp pos
 
             Game.subGames.Add(foodSubGame);
         }
