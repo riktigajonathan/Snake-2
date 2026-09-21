@@ -44,8 +44,6 @@ internal class Tile
             (int)(size.Y * globalScale.Y), 
             color
         );
-
-        //Raylib.DrawRectangle((int)Math.Round(visualPos.X + offset.X + size.X * 0.2f), (int)Math.Round(visualPos.Y + offset.Y + size.Y * 0.2f), (int)(size.X * 0.6f), (int)(size.Y * 0.6f), new Color((byte)color.R-6, (byte)color.G-6, (byte)color.B-6, (byte)255));
     }
 
     public void Move(Vector2 newPos)

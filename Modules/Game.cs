@@ -28,11 +28,7 @@ internal static class Game
 
         if (lastSubGameWon)
         {
-            if (currentSubGame != null)
-            {
-                currentSubGame.Grow();
-            }
-            else
+            if (currentSubGame == null)
             {
                 Win();
             }
