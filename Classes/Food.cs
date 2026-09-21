@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Numerics;
 using System.Text;
 
@@ -24,7 +25,8 @@ internal class Food
         } 
         else
         {
-            subGame = new(pos * mapScale, Game.currentSubGame); // temp pos
+            subGame = new(pos * mapScale, Game.currentSubGame);
+            subGame.GetMap().SetPos(Vector2.Zero);
 
             Game.subGames.Add(subGame);
         }
@@ -40,6 +42,22 @@ internal class Food
         if (tile != null)
         {
             tile.Draw(offset);
+        }
+        else if (subGame != null)
+        {
+            Map parentMap = Game.currentSubGame.GetMap();
+            Map subMap = subGame.GetMap();
+
+            Vector2 parentTileSize = parentMap.GetScale();
+            Vector2 subMapTotalSize = subMap.size * subMap.GetScale();
+
+            Tile.globalScale = parentTileSize / subMapTotalSize;
+            Tile.globalOffset = subGame.GetPos() + offset;
+
+            subGame.Draw();
+
+            Tile.globalScale = Vector2.One;
+            Tile.globalOffset = Vector2.Zero;
         }
     }
 
@@ -57,6 +75,7 @@ internal class Food
         {
             queuedDeletion = true;
             Game.ChangeSubGameTo(subGame);
+            Game.Center();
         }
 
         eaten = true;
@@ -67,6 +86,10 @@ internal class Food
         if (tile != null)
         {
             return tile.pos / tile.size;
+        }
+        else if (subGame != null)
+        {
+            return subGame.GetPos() / subGame.GetMap().GetScale();
         }
 
         return Vector2.One * -1;

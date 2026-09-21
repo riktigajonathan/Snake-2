@@ -158,6 +158,7 @@ internal class SubGame
         offset = newPos;
     }
 
+    public Vector2 GetPos() => offset;
     public Map GetMap() => map;
     public List<Food> GetFood() => food;
     public bool MapOccupied(Vector2 pos) => GetMap().OccupiedAt(pos);

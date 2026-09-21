@@ -8,6 +8,9 @@ namespace Snake_2;
 
 internal class Tile
 {
+    public static Vector2 globalOffset = Vector2.Zero;
+    public static Vector2 globalScale = Vector2.One;
+
     public Vector2 pos;
     public Vector2 visualPos;
     public Vector2 size;
@@ -35,10 +38,10 @@ internal class Tile
         }
 
         Raylib.DrawRectangle(
-            (int)Math.Round(visualPos.X+offset.X), 
-            (int)Math.Round(visualPos.Y+offset.Y), 
-            (int)size.X, 
-            (int)size.Y, 
+            (int)(((visualPos.X+offset.X) * globalScale.X) + globalOffset.X + 0.5f), 
+            (int)(((visualPos.Y+offset.Y) * globalScale.Y) + globalOffset.Y + 0.5f), 
+            (int)(size.X * globalScale.X), 
+            (int)(size.Y * globalScale.Y), 
             color
         );
 

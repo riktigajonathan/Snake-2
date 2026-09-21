@@ -39,7 +39,17 @@ internal class Map
 
     public void Draw()
     {
-        Raylib.DrawRectangle((int)(pos.X - tileSize.X), (int)(pos.Y - tileSize.Y), (int)(tileSize.X * (size.X+2)), (int)(tileSize.Y * (size.Y+2)), Settings.borderColor);
+        if (Game.currentSubGame.GetMap() == this)
+        {
+            Raylib.DrawRectangle(
+                (int)((pos.X - tileSize.X) * Tile.globalScale.X + Tile.globalOffset.X),
+                (int)((pos.Y - tileSize.Y) * Tile.globalScale.Y + Tile.globalOffset.Y),
+                (int)(tileSize.X * (size.X + 2) * Tile.globalScale.X),
+                (int)(tileSize.Y * (size.Y + 2) * Tile.globalScale.Y),
+                Settings.borderColor
+            );
+        }
+
         for (int x = 0; x < tiles.GetLength(0); x++)
         {
             for (int y = 0; y < tiles.GetLength(1); y++)

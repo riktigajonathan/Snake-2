@@ -41,11 +41,11 @@ internal class Settings
     public static Vector2 mapSize = new Vector2(10, 9);
     public static Vector2 tileSize = new Vector2(10, 10);
 
-    public static float moveDelay = 0.01f; // 0.1f;
+    public static float moveDelay = 0.00f; // 0.1f;
     public static float moveTransition = 0; // 0.11f;
 
     public static int startLength = 3;
-    public static int appleCount = 5;
+    public static int appleCount = 1;
     public static int gameDepth = 1;
 
     public static readonly Random rng = new Random();

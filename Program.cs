@@ -5,6 +5,8 @@ namespace Snake_2;
 
 internal static class Program
 {
+    public static bool WindowShouldClose = false;
+
     [System.STAThread]
     public static void Main()
     {
@@ -47,7 +49,7 @@ internal static class Program
         );
         Game.AddSubGame(gamePos);
 
-        while (!Raylib.WindowShouldClose())
+        while (!Raylib.WindowShouldClose() && !WindowShouldClose)
         {
             // ---------- update ----------
 

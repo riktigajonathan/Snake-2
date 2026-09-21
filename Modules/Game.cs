@@ -22,16 +22,23 @@ internal static class Game
     public static void ChangeSubGameTo(SubGame subgame)
     {
         currentSubGame = subgame;
+        if (lastSubGameWon)
+        {
+            if (currentSubGame != null)
+            {
+                currentSubGame.Grow();
+            }
+            else
+            {
+                Win();
+            }
+        }
     }
 
     public static void Draw()
     {
-        if (subGames.Count <= 0) return;
-
-        for (int i = 0; i < subGames.Count; i++) // todo: only draw visible
-        {
-            subGames[i].Draw();
-        }
+        if (currentSubGame != null)
+            currentSubGame.Draw();
     }
 
     public static void Update()
@@ -42,5 +49,22 @@ internal static class Game
         {
             currentSubGame.Update();
         }
+    }
+
+    public static void Center()
+    {
+        Vector2 center = Settings.GetCenter();
+        var gamePos = new Vector2(
+            center.X - (Settings.mapSize.X * Settings.tileSize.X) / 2f,
+            center.Y - (Settings.mapSize.Y * Settings.tileSize.Y) / 2f
+        );
+        currentSubGame.SetPos(gamePos);
+        currentSubGame.GetMap().SetPos(gamePos);
+    }
+
+    public static void Win()
+    {
+        Console.WriteLine("you won!");
+        Program.WindowShouldClose = true;
     }
 }
