@@ -6,6 +6,7 @@ namespace Snake_2;
 internal static class Program
 {
     public static bool WindowShouldClose = false;
+    public static Camera2D camera;
 
     [System.STAThread]
     public static void Main()
@@ -30,7 +31,7 @@ internal static class Program
             TextureFilter.Point
         );
 
-        Camera2D camera = new Camera2D
+        camera = new Camera2D
         {
             Target = Settings.cameraPosition,
 
@@ -39,7 +40,7 @@ internal static class Program
                 Settings.gameScreenHeight / 2f
             ),
 
-            Zoom = Settings.cameraZoom
+            Zoom = 1f
         };
 
         Vector2 center = Settings.GetCenter();

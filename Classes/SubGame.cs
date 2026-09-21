@@ -11,6 +11,7 @@ internal class SubGame
     public Dictionary<KeyboardKey, Action> keybinds = new();
     public SubGame parent;
     public int depth = 0;
+    public bool paused = false;
 
     Map map;
     Snake snake;
@@ -48,35 +49,38 @@ internal class SubGame
     {
         map.Draw();
 
-        for (int i = 0; i < food.Count; i++)
-        {
-            food[i].Draw(offset);
-        }
-
         if (snake != null && Game.currentSubGame == this)
         {
             snake.Draw(offset);
+        }
+
+        for (int i = 0; i < food.Count; i++)
+        {
+            food[i].Draw(offset);
         }
     }
 
     public void Update()
     {
-        int pressedKey = Raylib.GetKeyPressed();
-        if (pressedKey != 0)
+        if (!paused)
         {
-            KeyboardKey key = (KeyboardKey)pressedKey;
-
-            if (keybinds.TryGetValue(key, out Action? action))
+            int pressedKey = Raylib.GetKeyPressed();
+            if (pressedKey != 0 && !paused)
             {
-                action.Invoke();
+                KeyboardKey key = (KeyboardKey)pressedKey;
+
+                if (keybinds.TryGetValue(key, out Action? action))
+                {
+                    action.Invoke();
+                }
             }
-        }
 
-        snake.Update();
+            snake.Update();
 
-        if (food.Count < Settings.appleCount)
-        {
-            SpawnFood();
+            if (food.Count < Settings.appleCount)
+            {
+                SpawnFood();
+            }
         }
 
         for (int i = 0; i < food.Count; i++)

@@ -22,6 +22,10 @@ internal static class Game
     public static void ChangeSubGameTo(SubGame subgame)
     {
         currentSubGame = subgame;
+
+        if (currentSubGame != null)
+            currentSubGame.paused = false;
+
         if (lastSubGameWon)
         {
             if (currentSubGame != null)

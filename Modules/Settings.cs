@@ -13,8 +13,7 @@ internal class Settings
     public static int gameScreenWidth = 256;
     public static int gameScreenHeight = 144;
     
-    public static float cameraZoom = 1.0f;
-    public static Vector2 cameraPosition = new Vector2(128, 72);
+    public static Vector2 cameraPosition = new Vector2(gameScreenWidth/2, gameScreenHeight/2);
 
     public static float GetScale()
     {
@@ -38,11 +37,12 @@ internal class Settings
     public static Color snakeColor = new(178, 100, 237);
     public static Color foodColor = new(255, 148, 142);
 
-    public static Vector2 mapSize = new Vector2(10, 9);
+    public static Vector2 mapSize = new Vector2(10, 10);
     public static Vector2 tileSize = new Vector2(10, 10);
 
-    public static float moveDelay = 0.00f; // 0.1f;
+    public static float moveDelay = 0.05f; // 0.1f;
     public static float moveTransition = 0; // 0.11f;
+    public static float zoomTransition = 1000;
 
     public static int startLength = 3;
     public static int appleCount = 1;

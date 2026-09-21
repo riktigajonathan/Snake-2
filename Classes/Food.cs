@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using System.Text;
+using Raylib_cs;
 
 namespace Snake_2;
 
@@ -13,6 +14,10 @@ internal class Food
 
     public bool eaten = false;
     public bool queuedDeletion = false;
+
+    float zoomTimer = 0;
+    bool zoomActive = false;
+    Vector2 targetOffset = Vector2.Zero;
 
     public Food(Vector2 pos)
     {
@@ -25,8 +30,22 @@ internal class Food
         } 
         else
         {
-            subGame = new(pos * mapScale, Game.currentSubGame);
+            targetOffset = pos * mapScale;
+            subGame = new(targetOffset, Game.currentSubGame);
             subGame.GetMap().SetPos(Vector2.Zero);
+
+            Console.WriteLine(targetOffset);
+
+            targetOffset = targetOffset-(Settings.tileSize * Settings.mapSize)/2;
+
+            targetOffset -= new Vector2(
+                (Settings.gameScreenWidth / Settings.tileSize.X/2) - Settings.tileSize.X / 2,
+                (Settings.gameScreenHeight / Settings.tileSize.X/2) - Settings.tileSize.X / 2
+            );
+           
+
+            Console.WriteLine(targetOffset);
+
 
             Game.subGames.Add(subGame);
         }
@@ -34,7 +53,20 @@ internal class Food
 
     public void Update()
     {
-        // animations
+        if (zoomActive)
+        {
+            zoomTimer += Raylib.GetFrameTime();
+
+            Program.camera.Offset = Vector2.Lerp(Program.camera.Offset, -targetOffset*Settings.tileSize, zoomTimer / Settings.zoomTransition);
+            Program.camera.Zoom = float.Lerp(Program.camera.Zoom, Settings.tileSize.X, zoomTimer / Settings.zoomTransition);
+            
+            if (zoomTimer > Settings.zoomTransition/1000)
+            {
+                Program.camera.Zoom = 1f;
+                Program.camera.Offset = Settings.cameraPosition;
+                EnterSubGame();
+            }
+        }
     }
 
     public void Draw(Vector2 offset)
@@ -73,12 +105,18 @@ internal class Food
         }
         else if (subGame != null)
         {
-            queuedDeletion = true;
-            Game.ChangeSubGameTo(subGame);
-            Game.Center();
+            Game.currentSubGame.paused = true;
+            zoomActive = true;
         }
 
         eaten = true;
+    }
+
+    void EnterSubGame()
+    {
+        queuedDeletion = true;
+        Game.ChangeSubGameTo(subGame);
+        Game.Center();
     }
 
     public Vector2 GetPos()
