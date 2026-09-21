@@ -34,18 +34,12 @@ internal class Food
             subGame = new(targetOffset, Game.currentSubGame);
             subGame.GetMap().SetPos(Vector2.Zero);
 
-            Console.WriteLine(targetOffset);
-
             targetOffset = targetOffset-(Settings.tileSize * Settings.mapSize)/2;
 
             targetOffset -= new Vector2(
                 (Settings.gameScreenWidth / Settings.tileSize.X/2) - Settings.tileSize.X / 2,
                 (Settings.gameScreenHeight / Settings.tileSize.X/2) - Settings.tileSize.X / 2
             );
-           
-
-            Console.WriteLine(targetOffset);
-
 
             Game.subGames.Add(subGame);
         }

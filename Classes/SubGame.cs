@@ -9,7 +9,7 @@ namespace Snake_2;
 internal class SubGame
 {
     public Dictionary<KeyboardKey, Action> keybinds = new();
-    public SubGame parent;
+    public SubGame? parent = null;
     public int depth = 0;
     public bool paused = false;
 
@@ -77,11 +77,17 @@ internal class SubGame
 
             snake.Update();
 
-            if (food.Count < Settings.appleCount)
+            var successful = true;
+            while (food.Count < Settings.appleCount && successful)
             {
-                SpawnFood();
+                successful = SpawnFood();
+                if (successful)
+                {
+                    break;
+                }
             }
         }
+        //if (Game.currentSubGame != this) return;
 
         for (int i = 0; i < food.Count; i++)
         {
@@ -100,26 +106,27 @@ internal class SubGame
         }
     }
 
-    static void Exit(bool won)
+    void Exit(bool won)
     {
-        SubGame current = Game.currentSubGame;
+        SubGame current = this;
 
         Game.subGames.Remove(current);
         Game.lastSubGameWon = won;
+
         Game.ChangeSubGameTo(current.parent);
     }
 
-    public static void Win()
+    public void Win()
     {
-        SubGame.Exit(true);
+        Exit(true);
     }
 
-    public static void Die()
+    public void Die()
     {
-        SubGame.Exit(false);
+        Exit(false);
     }
 
-    public void SpawnFood()
+    public bool SpawnFood()
     {
         List<Vector2> spawnablePos = new();
 
@@ -135,9 +142,10 @@ internal class SubGame
             }
         }
 
-        if (spawnablePos.Count == 1)
+        if (spawnablePos.Count == 0)
         {
-            SubGame.Win();
+            Win();
+            return false;
         }
 
         for (int i = 0; i < food.Count; i++)
@@ -145,11 +153,17 @@ internal class SubGame
             spawnablePos.Remove(food[i].GetPos());
         }
         
-        if (spawnablePos.Count-1 > 0)
+        if (spawnablePos.Count > 0)
         {
             var newFood = new Food(spawnablePos[Settings.rng.Next(0, spawnablePos.Count)]);
             food.Add(newFood);
         } 
+        else
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public void Grow()

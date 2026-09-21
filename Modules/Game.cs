@@ -19,7 +19,7 @@ internal static class Game
         currentSubGame = subGame;
     }
 
-    public static void ChangeSubGameTo(SubGame subgame)
+    public static void ChangeSubGameTo(SubGame? subgame)
     {
         currentSubGame = subgame;
 
@@ -28,7 +28,11 @@ internal static class Game
 
         if (lastSubGameWon)
         {
-            if (currentSubGame == null)
+            if (currentSubGame != null)
+            {
+                currentSubGame.Grow();
+            }
+            else
             {
                 Win();
             }

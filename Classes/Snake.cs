@@ -9,6 +9,7 @@ internal class Snake
 {
     public List<Tile> body = new();
     public Vector2 dir = new Vector2(1, 0);
+    public SubGame parent;
 
     Vector2 pos;
     Vector2 tileSize;
@@ -23,6 +24,7 @@ internal class Snake
         this.pos = pos;
         this.tileSize = Settings.tileSize;
         this.color = Settings.snakeColor;
+        this.parent = Game.currentSubGame;
 
         CreateSnake(Settings.startLength-1);
     }
@@ -92,7 +94,7 @@ internal class Snake
         Vector2 newHeadPos = body[0].pos + (dir * tileSize);
         if (Game.currentSubGame.MapOccupied(newHeadPos))
         {
-            SubGame.Die();
+            parent.Die();
         }
 
         for (int i = body.Count - 1; i >= 1; i--)
@@ -101,7 +103,7 @@ internal class Snake
 
             if (body[i].pos == newHeadPos)
             {
-                SubGame.Die();
+                parent.Die();
             }
         }
 
