@@ -62,7 +62,7 @@ internal class Food
             
             if (zoomTimer > Settings.zoomTransition/1000)
             {
-                Program.camera.Zoom = 1f;
+                Program.camera.Zoom = Settings.defaultZoom;
                 Program.camera.Offset = Settings.cameraPosition;
                 EnterSubGame();
             }

@@ -18,6 +18,8 @@ internal class SubGame
     List<Food> food;
 
     Vector2 offset = Vector2.Zero;
+    Vector2 cameraOffset = Vector2.Zero;
+    float cameraZoom = 1f;
 
     public SubGame(Vector2 pos, SubGame parent = null)
     {

@@ -40,7 +40,7 @@ internal static class Program
                 Settings.gameScreenHeight / 2f
             ),
 
-            Zoom = 1f
+            Zoom = Settings.defaultZoom
         };
 
         Vector2 center = Settings.GetCenter();

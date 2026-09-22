@@ -14,6 +14,8 @@ internal class Settings
     public static int gameScreenHeight = 144;
     
     public static Vector2 cameraPosition = new Vector2(gameScreenWidth/2, gameScreenHeight/2);
+    public static float defaultZoom = 1f;
+    public static float zoomTransition = 1400;
 
     public static float GetScale()
     {
@@ -40,9 +42,8 @@ internal class Settings
     public static Vector2 mapSize = new Vector2(10, 10);
     public static Vector2 tileSize = new Vector2(10, 10);
 
-    public static float moveDelay = 0.1f; // 0.1f;
-    public static float moveTransition = 0.11f; // 0.11f;
-    public static float zoomTransition = 1400;
+    public static float moveDelay = 0.01f; // 0.1f;
+    public static float moveTransition = 0; // 0.11f;
 
     public static int startLength = 3;
     public static int appleCount = 3;
