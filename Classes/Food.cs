@@ -34,18 +34,12 @@ internal class Food
             subGame = new(targetOffset, Game.currentSubGame);
             subGame.GetMap().SetPos(Vector2.Zero);
 
-            Console.WriteLine(targetOffset);
-
             targetOffset = targetOffset-(Settings.tileSize * Settings.mapSize)/2;
 
             targetOffset -= new Vector2(
                 (Settings.gameScreenWidth / Settings.tileSize.X/2) - Settings.tileSize.X / 2,
                 (Settings.gameScreenHeight / Settings.tileSize.X/2) - Settings.tileSize.X / 2
             );
-           
-
-            Console.WriteLine(targetOffset);
-
 
             Game.subGames.Add(subGame);
         }
@@ -62,8 +56,12 @@ internal class Food
             
             if (zoomTimer > Settings.zoomTransition/1000)
             {
+                Game.currentSubGame.cameraOffset = Program.camera.Offset;
+                Game.currentSubGame.cameraZoom = Program.camera.Zoom;
+
                 Program.camera.Zoom = Settings.defaultZoom;
                 Program.camera.Offset = Settings.cameraPosition;
+
                 EnterSubGame();
             }
         }
@@ -114,6 +112,7 @@ internal class Food
 
     void EnterSubGame()
     {
+        Game.lastEntered = true;
         queuedDeletion = true;
         Game.ChangeSubGameTo(subGame);
         Game.Center();

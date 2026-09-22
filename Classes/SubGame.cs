@@ -18,8 +18,11 @@ internal class SubGame
     List<Food> food;
 
     Vector2 offset = Vector2.Zero;
-    Vector2 cameraOffset = Vector2.Zero;
-    float cameraZoom = 1f;
+    
+    public Vector2 cameraOffset = Settings.cameraPosition;
+    public float cameraZoom = 1f;
+    float zoomTimer = 0f;
+    bool zoomActive = false;
 
     public SubGame(Vector2 pos, SubGame parent = null)
     {
@@ -37,6 +40,16 @@ internal class SubGame
         this.offset = map.GetPos();
 
         InitKeybinds();
+    }
+
+    public void InitZoom()
+    {
+        zoomActive = true;
+        paused = true;
+        zoomTimer = 0;
+
+        Program.camera.Offset = cameraOffset;
+        Program.camera.Zoom = cameraZoom;
     }
 
     public void InitKeybinds()
@@ -64,6 +77,22 @@ internal class SubGame
 
     public void Update()
     {
+        if (zoomActive)
+        {
+            zoomTimer += Raylib.GetFrameTime();
+
+            Program.camera.Offset = Vector2.Lerp(Program.camera.Offset, Settings.cameraPosition, zoomTimer / Settings.zoomTransition);
+            Program.camera.Zoom = float.Lerp(Program.camera.Zoom, Settings.defaultZoom, zoomTimer / Settings.zoomTransition);
+
+            if (zoomTimer > Settings.zoomTransition / 1000)
+            {
+                Program.camera.Offset = Settings.cameraPosition;
+                Program.camera.Zoom = Settings.defaultZoom;
+                zoomActive = false;
+                paused = false;
+            }
+        }
+
         if (!paused)
         {
             int pressedKey = Raylib.GetKeyPressed();
@@ -105,6 +134,7 @@ internal class SubGame
     static void Exit(bool won)
     {
         SubGame current = Game.currentSubGame;
+        Game.lastEntered = false;
 
         Game.subGames.Remove(current);
         Game.lastSubGameWon = won;

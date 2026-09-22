@@ -11,6 +11,7 @@ internal static class Game
     public static List<SubGame> subGames = new();
     public static SubGame currentSubGame = null;
     public static bool lastSubGameWon = false;
+    public static bool lastEntered = true;
 
     public static void AddSubGame(Vector2 pos)
     {
@@ -23,14 +24,18 @@ internal static class Game
     {
         currentSubGame = subgame;
 
-        if (currentSubGame != null)
-            currentSubGame.paused = false;
-
         if (lastSubGameWon)
         {
             if (currentSubGame == null)
             {
                 Win();
+            }
+            else
+            {
+                if (!Game.lastEntered)
+                {
+                    currentSubGame.InitZoom();
+                }
             }
         }
     }
