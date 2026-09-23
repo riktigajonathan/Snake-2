@@ -13,6 +13,9 @@ internal static class Game
     public static bool lastSubGameWon = false;
     public static bool lastEntered = true;
 
+    public static float originalMoveDelay = Settings.moveDelay;
+    public static float originalZoomTransition = Settings.zoomTransition;
+
     public static void AddSubGame(Vector2 pos)
     {
         var subGame = new SubGame(pos);
@@ -43,7 +46,9 @@ internal static class Game
     public static void Draw()
     {
         if (currentSubGame != null)
+        {
             currentSubGame.Draw();
+        }
     }
 
     public static void Update()
@@ -52,6 +57,9 @@ internal static class Game
 
         if (currentSubGame != null)
         {
+            if (Settings.exponentialTime)
+                Settings.moveDelay = originalMoveDelay / ((currentSubGame.depth) + 1);
+                Settings.zoomTransition = originalZoomTransition / ((currentSubGame.depth) + 1);
             currentSubGame.Update();
         }
     }

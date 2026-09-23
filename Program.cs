@@ -7,6 +7,7 @@ internal static class Program
 {
     public static bool WindowShouldClose = false;
     public static Camera2D camera;
+    public static float flashTimer = 0;
 
     [System.STAThread]
     public static void Main()
@@ -74,9 +75,24 @@ internal static class Program
                 Color.White
             );
 
+
             // ---------- end draw ----------
 
             Raylib.EndMode2D();
+
+            Raylib.BeginBlendMode(BlendMode.Additive);
+            float a = (flashTimer / Settings.flashTime) * Settings.flashMultiplier;
+            flashTimer -= Raylib.GetFrameTime();
+            if (flashTimer > 0)
+            {
+                Raylib.DrawRectangle(0, 0, Settings.gameScreenWidth, Settings.gameScreenHeight, new Color(1, 1, 1, a));
+            }
+            else
+            {
+                flashTimer = 0;
+            }
+            Raylib.EndBlendMode();
+
             Raylib.EndTextureMode();
 
             Raylib.BeginDrawing();

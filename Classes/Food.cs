@@ -53,8 +53,8 @@ internal class Food
 
             Program.camera.Offset = Vector2.Lerp(Program.camera.Offset, -targetOffset*Settings.tileSize, zoomTimer / Settings.zoomTransition);
             Program.camera.Zoom = float.Lerp(Program.camera.Zoom, Settings.tileSize.X, zoomTimer / Settings.zoomTransition);
-            
-            if (zoomTimer > Settings.zoomTransition/1000)
+
+            if (zoomTimer > Settings.zoomTransition / 1000)
             {
                 Game.currentSubGame.cameraOffset = Program.camera.Offset;
                 Game.currentSubGame.cameraZoom = Program.camera.Zoom;
@@ -112,6 +112,7 @@ internal class Food
 
     void EnterSubGame()
     {
+        Program.flashTimer = Settings.flashTime;
         Game.lastEntered = true;
         queuedDeletion = true;
         Game.ChangeSubGameTo(subGame);
