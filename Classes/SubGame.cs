@@ -80,11 +80,19 @@ internal class SubGame
         if (zoomActive)
         {
             zoomTimer += Raylib.GetFrameTime();
+            
+            // Progress of animation
+            float t = zoomTimer / Settings.zoomTransition;
+            t = MathF.Min(t, 1.0f);
 
-            Program.camera.Offset = Vector2.Lerp(Program.camera.Offset, Settings.cameraPosition, zoomTimer / Settings.zoomTransition);
-            Program.camera.Zoom = float.Lerp(Program.camera.Zoom, Settings.defaultZoom, zoomTimer / Settings.zoomTransition);
+            // Easing function
+            t = t * t * (3.0f - 2.0f * t);
 
-            if (zoomTimer > Settings.zoomTransition / 1000)
+            Program.camera.Offset = Vector2.Lerp(Program.camera.Offset, Settings.cameraPosition, t);
+            Program.camera.Zoom = float.Lerp(Program.camera.Zoom, Settings.defaultZoom, t);
+
+            // If animation finished, exit subgame.
+            if (t >= 1.0f)
             {
                 Program.camera.Offset = Settings.cameraPosition;
                 Program.camera.Zoom = Settings.defaultZoom;

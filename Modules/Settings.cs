@@ -45,7 +45,8 @@ internal class Settings
 
     public static float moveDelay = 0.1f; // 0.1f;
     public static float moveTransition = 0; // 0.11f;
-    public static float zoomTransition = 1400f;
+    // Zoom transition time in seconds
+    public static float zoomTransition = 1.0f;
     public static bool exponentialTime = true;
 
     public static int startLength = 3;
