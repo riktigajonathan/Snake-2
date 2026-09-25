@@ -62,7 +62,7 @@ internal class Food
             Program.camera.Zoom = float.Lerp(Program.camera.Zoom, Settings.tileSize.X, t);
 
             // If animation finished, enter subgame.
-            if (t >= 1.0f)
+            if (t >= 0.6f)
             {
                 Game.currentSubGame.cameraOffset = Program.camera.Offset;
                 Game.currentSubGame.cameraZoom = Program.camera.Zoom;

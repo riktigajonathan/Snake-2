@@ -92,7 +92,7 @@ internal class SubGame
             Program.camera.Zoom = float.Lerp(Program.camera.Zoom, Settings.defaultZoom, t);
 
             // If animation finished, exit subgame.
-            if (t >= 1.0f)
+            if (t >= 0.6f)
             {
                 Program.camera.Offset = Settings.cameraPosition;
                 Program.camera.Zoom = Settings.defaultZoom;

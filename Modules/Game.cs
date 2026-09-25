@@ -59,7 +59,7 @@ internal static class Game
         {
             if (Settings.exponentialTime)
                 Settings.moveDelay = originalMoveDelay / ((currentSubGame.depth) + 1);
-                Settings.zoomTransition = originalZoomTransition / ((currentSubGame.depth) + 1);
+                //Settings.zoomTransition = originalZoomTransition / ((currentSubGame.depth) + 1);
             currentSubGame.Update();
         }
     }
