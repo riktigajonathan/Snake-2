@@ -1,4 +1,4 @@
-﻿using Raylib_cs;
+using Raylib_cs;
 using System.Numerics;
 
 namespace Snake_2;
@@ -96,7 +96,7 @@ internal static class Program
             Raylib.EndTextureMode();
 
             Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.Black);
+            Raylib.ClearBackground(Settings.bgColor);
 
             float scale = Settings.GetScale();
 
