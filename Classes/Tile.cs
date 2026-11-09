@@ -44,6 +44,24 @@ internal class Tile
             (int)(size.Y * globalScale.Y), 
             color
         );
+
+        Raylib.DrawRectangle(
+            (int)(((visualPos.X + offset.X) * globalScale.X) + globalOffset.X + 0.5f),
+            (int)(((visualPos.Y + offset.Y) * globalScale.Y) + globalOffset.Y + 0.5f),
+            (int)(size.X * globalScale.X),
+            (int)(size.Y * globalScale.Y),
+            new Color(0, 0, 0, 20)
+        );
+
+        Raylib.BeginBlendMode(BlendMode.Additive);
+        Raylib.DrawRectangle(
+            (int)(((visualPos.X + offset.X + 1) * globalScale.X) + globalOffset.X + 0.5f),
+            (int)(((visualPos.Y + offset.Y + 1) * globalScale.Y) + globalOffset.Y + 0.5f),
+            (int)((size.X-2)* globalScale.X),
+            (int)((size.Y-2)* globalScale.Y),
+            new Color(255,255,255, 5)
+        );
+        Raylib.EndBlendMode();
     }
 
     public void Move(Vector2 newPos)

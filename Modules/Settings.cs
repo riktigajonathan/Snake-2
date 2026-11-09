@@ -15,8 +15,8 @@ internal class Settings
     
     public static Vector2 cameraPosition = new Vector2(gameScreenWidth/2, gameScreenHeight/2);
     public static float defaultZoom = 1f;
-    public static float flashTime = 0.6f;
-    public static float flashMultiplier = 0.2f;
+    public static float flashTime = 0f;
+    public static float flashMultiplier = 0f;
 
     public static float GetScale()
     {
@@ -51,7 +51,7 @@ internal class Settings
 
     public static int startLength = 3;
     public static int appleCount = 5;
-    public static int gameDepth = 3;
+    public static int gameDepth = 4;
 
     public static readonly Random rng = new Random();
 

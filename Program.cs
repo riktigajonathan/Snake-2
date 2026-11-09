@@ -13,7 +13,7 @@ internal static class Program
     public static void Main()
     {
         Raylib.SetConfigFlags(
-            ConfigFlags.ResizableWindow
+            ConfigFlags.ResizableWindow | ConfigFlags.VSyncHint
         );
 
         Raylib.InitWindow(

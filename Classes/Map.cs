@@ -42,12 +42,30 @@ internal class Map
         if (Game.currentSubGame.GetMap() == this)
         {
             Raylib.DrawRectangle(
+                (int)((pos.X - tileSize.X + 6) * Tile.globalScale.X + Tile.globalOffset.X),
+                (int)((pos.Y - tileSize.Y + 6) * Tile.globalScale.Y + Tile.globalOffset.Y),
+                (int)(tileSize.X * (size.X + 2) * Tile.globalScale.X),
+                (int)(tileSize.Y * (size.Y + 2) * Tile.globalScale.Y),
+                new Color(0, 0, 0, 20)
+            );
+
+            Raylib.DrawRectangle(
                 (int)((pos.X - tileSize.X) * Tile.globalScale.X + Tile.globalOffset.X),
                 (int)((pos.Y - tileSize.Y) * Tile.globalScale.Y + Tile.globalOffset.Y),
                 (int)(tileSize.X * (size.X + 2) * Tile.globalScale.X),
                 (int)(tileSize.Y * (size.Y + 2) * Tile.globalScale.Y),
                 Settings.borderColor
             );
+
+            Raylib.BeginBlendMode(BlendMode.Additive);
+            Raylib.DrawRectangle(
+                (int)((pos.X - tileSize.X + 2) * Tile.globalScale.X + Tile.globalOffset.X),
+                (int)((pos.Y - tileSize.Y + 2) * Tile.globalScale.Y + Tile.globalOffset.Y),
+                (int)((tileSize.X * (size.X + 2) - 4) * Tile.globalScale.X),
+                (int)((tileSize.Y * (size.Y + 2)-4) * Tile.globalScale.Y),
+                new Color(255, 255, 255, 10)
+            );
+            Raylib.EndBlendMode();
         }
 
         for (int x = 0; x < tiles.GetLength(0); x++)

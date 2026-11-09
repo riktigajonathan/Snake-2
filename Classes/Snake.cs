@@ -55,15 +55,16 @@ internal class Snake
     {
         float dt = Raylib.GetFrameTime();
 
+        for (int i = 0; i < body.Count; i++)
+        {
+            body[i].color = Color.FromHSV(i*(0.5f), 0.7f, 1f);
+            body[i].UpdateTween(dt);
+        }
+
         moveTimer -= dt;
         if (moveTimer <= 0)
         {
             Move();
-        }
-
-        for (int i = 0; i < body.Count; i++)
-        {
-            body[i].UpdateTween(dt);
         }
     }
 
@@ -123,7 +124,7 @@ internal class Snake
         {
             var tile = new Tile(body[body.Count-1].pos, tileSize, color);
             tile.visualPos = body[body.Count-1].visualPos;
-
+            tile.color = Color.FromHSV((body.Count-1)* (0.5f), 0.7f, 1f);
             body.Add(tile);
         }
     }
